@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Code Quiz</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Highscores</a>
+      <p>Time: <span id="timer"></span></p>
+    </nav>
+    <div class="container">
+      <div class="jumbotron" id="quizChallengeInitial" style="display: block;">
+        <h1 class="display-4">Coding Quiz Challenge!</h1>
+        <p class="lead">
+          A fast paced quiz to check your knowledge of HTML, CSS, and JS.
+        </p>
+        <hr class="my-4" />
+        <p>
+          Click start to begin the quiz.
+        </p>
+        <button type="button" class="btn btn-dark btn-lg" id="start">
+          Start
+        </button>
+      </div>
+      <div class="jumbotron" id="questionPage" style="display: none;">
+        <h1 class="display-4" id="question"></h1>
+        <hr class="my-4" />
+        <div id="list"></div>
+      </div>
+      <div class="jumbotron" id="scorePage" style="display: block;">
+        <h1 class="display-4">Score</h1>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
