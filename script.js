@@ -1,9 +1,10 @@
 //document variables
 var $timer = document.getElementById("timer");
 var $start = document.querySelector("#start");
-var $quizStartPage = document.getElementById("quizChallengeInitial");
 var $list = document.getElementById("list");
+var $quizStartPage = document.getElementById("quizChallengeInitial");
 var $questionPage = document.getElementById("questionPage");
+var $scorePage = document.getElementById("scorePage");
 
 //quiz questions w/ options & correct answer
 
@@ -103,4 +104,6 @@ function scoring() {
   }
 }
 
-function renderScore() {}
+function renderScore() {
+  $scorePage.style.display = "block";
+}
