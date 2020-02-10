@@ -6,6 +6,8 @@ var $quizStartPage = document.getElementById("quizChallengeInitial");
 var $questionPage = document.getElementById("questionPage");
 var $scorePage = document.getElementById("scorePage");
 var $displayScore = document.getElementById("displayScore");
+var $submit = document.getElementById("#submit");
+var $reset = document.getElementById("#reset");
 
 //quiz questions w/ options & correct answer
 
@@ -34,6 +36,8 @@ var score = 0;
 var timerCountdown;
 
 $start.addEventListener("click", quizStart);
+$submit.addEventListener("click", submitScore);
+$reset.addEventListener("click", restartQuiz);
 
 function quizStart() {
   countdown();
@@ -118,4 +122,8 @@ function renderScore() {
   numberCorrect = numberCorrect * parseInt($timer.innerText);
 
   $displayScore.textContent = numberCorrect;
+
+  let userName = document.querySelector("#scoreName").value;
+
+  console.log(userName);
 }
