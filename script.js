@@ -5,6 +5,7 @@ var $list = document.getElementById("list");
 var $quizStartPage = document.getElementById("quizChallengeInitial");
 var $questionPage = document.getElementById("questionPage");
 var $scorePage = document.getElementById("scorePage");
+var $displayScore = document.getElementById("displayScore");
 
 //quiz questions w/ options & correct answer
 
@@ -17,7 +18,7 @@ var questionList = [
   (question2 = {
     question: "Which CSS style changes the font color?",
     answers: ["font-color", "color", "background-color", "style"],
-    correct: "color:"
+    correct: "color"
   }),
   (question3 = {
     question: "How do you comment one line in JavaScipt?",
@@ -30,6 +31,7 @@ var questionList = [
 var userAnswers = [];
 var questionNumber = 0;
 var score = 0;
+var timerCountdown;
 
 $start.addEventListener("click", quizStart);
 
@@ -37,15 +39,12 @@ function quizStart() {
   countdown();
   displayStatus();
   renderQuestion();
-  scoreCounter();
-  if (questionNumber === 3) {
-    scoring();
-  }
+  ansLog();
 }
 
 function countdown() {
   let time = 100;
-  let timerCountdown = setInterval(function() {
+  timerCountdown = setInterval(function() {
     $timer.textContent = time;
     --time;
     if (time === 0) {
@@ -73,10 +72,12 @@ function renderQuestion() {
       button.textContent = questionList[questionNumber].answers[i];
       $list.appendChild(button);
     }
+  } else {
+    renderScore();
   }
 }
 
-function scoreCounter() {
+function ansLog() {
   $list.addEventListener("click", function(e) {
     let element = e.target;
     if (element.matches("button") === true) {
@@ -105,5 +106,16 @@ function scoring() {
 }
 
 function renderScore() {
+  let scorerName = document.querySelector("#scoreName").value;
+
+  $questionPage.style.display = "none";
   $scorePage.style.display = "block";
+
+  clearInterval(timerCountdown);
+  scoring();
+
+  let numberCorrect = score;
+  numberCorrect = numberCorrect * parseInt($timer.innerText);
+
+  $displayScore.textContent = numberCorrect;
 }
