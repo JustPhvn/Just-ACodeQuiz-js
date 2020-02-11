@@ -14,7 +14,7 @@
   </head>
   <body>
     <nav class="navbar navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Highscores</a>
+      <a class="navbar-brand" id="linkScore">Highscores</a>
       <p>Time: <span id="timer"></span></p>
     </nav>
     <div class="container">
@@ -44,10 +44,20 @@
           <label for="exampleInputPassword1">Name</label>
           <input type="Name" class="form-control" id="scoreName" />
           <div class="text-center">
-            <button type="button" class="btn btn-dark" id="submit">Submit</button>
+            <button type="button" class="btn btn-dark" id="submit">
+              Submit
+            </button>
             <button type="button" class="btn btn-dark" id="reset">Reset</button>
           </div>
+        </div>
       </div>
+      <div class="jumbotron" id="highscorePage" style="display: none;">
+        <h1 class="display-4">Highscores</h1>
+        <hr class="my-4" id="scoreList" />
+        <div class="text-center">
+          <button type="button" class="btn btn-dark" id="resetQuiz">
+            Reset
+          </button>
         </div>
       </div>
     </div>

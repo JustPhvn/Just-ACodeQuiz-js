@@ -1,14 +1,18 @@
 //document variables
-var $timer = document.getElementById("timer");
 var $start = document.querySelector("#start");
+var $linkScore = document.querySelector("#linkScore");
+
+var $timer = document.getElementById("timer");
 var $list = document.getElementById("list");
 var $quizStartPage = document.getElementById("quizChallengeInitial");
 var $questionPage = document.getElementById("questionPage");
 var $scorePage = document.getElementById("scorePage");
 var $displayScore = document.getElementById("displayScore");
-var $submit = document.getElementById("#submit");
-var $reset = document.getElementById("#reset");
-
+var $submit = document.getElementById("submit");
+var $reset = document.getElementById("reset");
+var $resetScore = document.getElementById("resetQuiz");
+var $highscorePage = document.getElementById("highscorePage");
+var $scoreList = document.getElementById("scoreList");
 //quiz questions w/ options & correct answer
 
 var questionList = [
@@ -29,7 +33,6 @@ var questionList = [
   })
 ];
 
-//array to hold user answers
 var userAnswers = [];
 var questionNumber = 0;
 var score = 0;
@@ -38,6 +41,8 @@ var timerCountdown;
 $start.addEventListener("click", quizStart);
 $submit.addEventListener("click", submitScore);
 $reset.addEventListener("click", restartQuiz);
+$resetScore.addEventListener("click", restartQuiz);
+$linkScore.addEventListener("click", linkScore);
 
 function quizStart() {
   countdown();
@@ -102,6 +107,7 @@ function clearRender() {
 }
 
 function scoring() {
+  score = 0;
   for (let i = 0; i < questionList.length; i++) {
     if (userAnswers[i] === questionList[i].correct) {
       score++;
@@ -110,8 +116,6 @@ function scoring() {
 }
 
 function renderScore() {
-  let scorerName = document.querySelector("#scoreName").value;
-
   $questionPage.style.display = "none";
   $scorePage.style.display = "block";
 
@@ -122,8 +126,44 @@ function renderScore() {
   numberCorrect = numberCorrect * parseInt($timer.innerText);
 
   $displayScore.textContent = numberCorrect;
+}
 
-  let userName = document.querySelector("#scoreName").value;
+function submitScore() {
+  $scorePage.style.display = "none";
+  let user = document.querySelector("#scoreName").value;
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("score", JSON.stringify(userScore));
 
-  console.log(userName);
+  linkScore();
+}
+
+function restartQuiz() {
+  $quizStartPage.style.display = "block";
+  $scorePage.style.display = "none";
+  $questionPage.style.display = "none";
+  $highscorePage.style.display = "none";
+  score = 0;
+  questionNumber = 0;
+  userAnswers = [];
+}
+
+function linkScore() {
+  clearInterval(timerCountdown);
+  renderHighscore();
+  if ($highscorePage.style.display === "none") {
+    $questionPage.style.display = "none";
+    $quizStartPage.style.display = "none";
+    $scorePage.style.display = "none";
+    $highscorePage.style.display = "block";
+  }
+}
+
+function renderHighscore() {
+  let scores = JSON.parse(localStorage.getItem("score"));
+  let names = JSON.parse(localStorage.getItem("user"));
+  let addScore = scores;
+  let addName = names;
+  let p = document.createElement("p");
+  p.textContent = "Name: " + addName + " | Score: " + addScore;
+  $scoreList.appendChild(p);
 }
