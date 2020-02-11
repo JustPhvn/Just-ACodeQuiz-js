@@ -16,27 +16,28 @@ var $scoreList = document.getElementById("scoreList");
 //quiz questions w/ options & correct answer
 
 var questionList = [
-  (question1 = {
+  {
     question: "Which HTML header tag results in the largest header?",
     answers: ["h1", "h2", "h3", "h4"],
     correct: "h1"
-  }),
-  (question2 = {
+  },
+  {
     question: "Which CSS style changes the font color?",
     answers: ["font-color", "color", "background-color", "style"],
     correct: "color"
-  }),
-  (question3 = {
+  },
+  {
     question: "How do you comment one line in JavaScipt?",
     answers: ["//", "!--", "/*", "**"],
     correct: "//"
-  })
+  }
 ];
 
 var userAnswers = [];
 var questionNumber = 0;
 var score = 0;
 var timerCountdown;
+var numberCorrect;
 
 $start.addEventListener("click", quizStart);
 $submit.addEventListener("click", submitScore);
@@ -44,11 +45,21 @@ $reset.addEventListener("click", restartQuiz);
 $resetScore.addEventListener("click", restartQuiz);
 $linkScore.addEventListener("click", linkScore);
 
+$list.addEventListener("click", function(e) {
+  let element = e.target;
+  if (element.matches("button") === true) {
+    let ans = element.getAttribute("id");
+    userAnswers.push(ans);
+    console.log(userAnswers);
+    clearRender();
+    renderQuestion();
+  }
+});
+
 function quizStart() {
   countdown();
   displayStatus();
   renderQuestion();
-  ansLog();
 }
 
 function countdown() {
@@ -86,23 +97,13 @@ function renderQuestion() {
   }
 }
 
-function ansLog() {
-  $list.addEventListener("click", function(e) {
-    let element = e.target;
-    if (element.matches("button") === true) {
-      let ans = element.getAttribute("id");
-      userAnswers.push(ans);
-      console.log(userAnswers);
-      clearRender();
-      renderQuestion();
-    }
-  });
-}
-
 function clearRender() {
-  for (let i = 0; i < questionList[questionNumber].answers.length; i++) {
-    $list.removeChild($list.firstChild);
-  }
+  //easier clear then removing children
+  $list.innerHTML = "";
+  //complicated way of clearing page
+  // for (let i = 0; i < questionList[questionNumber].answers.length; i++) {
+  //   $list.removeChild($list.firstChild);
+  // }
   questionNumber++;
 }
 
@@ -122,8 +123,7 @@ function renderScore() {
   clearInterval(timerCountdown);
   scoring();
 
-  let numberCorrect = score;
-  numberCorrect = numberCorrect * parseInt($timer.innerText);
+  numberCorrect = score * parseInt($timer.innerText);
 
   $displayScore.textContent = numberCorrect;
 }
@@ -132,7 +132,7 @@ function submitScore() {
   $scorePage.style.display = "none";
   let user = document.querySelector("#scoreName").value;
   localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem("score", JSON.stringify(userScore));
+  localStorage.setItem("score", JSON.stringify(numberCorrect));
 
   linkScore();
 }
